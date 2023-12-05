@@ -1,82 +1,149 @@
-const options = ["rock", "paper", "scissors"];
+const options = ["🗿", "📄", "✂️"];
 
-let playerScore = 0;
-let computerScore = 0;
+let playerValue = 0;
+let computerValue = 0;
+
+
+let winner = '';
+let gameWinner = ''
 
 function computerChoice() {
     let randomInteger = Math.floor(Math.random() * 3);
     return options[randomInteger];
 }
 
-function playerChoice() {
-    let choiceRaw = prompt("Who is your champion? rock paper scissors");
-    let choiceCI = choiceRaw.toLowerCase();
-    return choiceCI;
+// User interface javascript to html connect
+
+const playerFob = document.querySelector('#playerFob');
+const computerFob = document.querySelector('#computerFob');
+
+const choicesContainer = document.querySelector('#choicesContainer');
+
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+
+const playerScorePara = document.querySelector('#playerScorePara');
+playerScorePara.innerText = `${playerValue}`;
+const computerScorePara = document.querySelector('#computerScorePara');
+computerScorePara.innerText = `${computerValue}`;
+
+const roundWinnerPara = document.querySelector("#round-winner-span");
+roundWinnerPara.innerText = `${winner}`;
+
+const gameWinnerPara = document.querySelector('#game-winner');
+
+
+// Player selecting their fob
+
+const playerSelection = function playerChoice() {
+    if (playerFob.textContent === '🗿') {
+        playerSelection = '🗿';
+    }
+    if (playerFob.textContent === '📄') {
+        playerSelection = '📄';
+    }
+    if (playerFob.textContent === '✂️') {
+        playerSelection = '✂️';
+    }
 }
 
 
+// playRound function 
 
-function playRound() {
-    // iteration of a user playing a single round
-    let computerSelection = computerChoice();
-    let playerSelection = playerChoice();
-    if ((playerSelection === "rock") && (computerSelection === "paper")) {
-        computerScore++;
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
+const playRoundVar = (computerSelection, playerSelection) => {
+    if ((playerSelection === "🗿") && (computerSelection === "📄") || 
+        (playerSelection === "📄") && (computerSelection === "✂️") || 
+        (playerSelection === "✂️") && (computerSelection === "🗿")) {
+            computerValue++;
+            winner = "computer";
     }
-    if ((playerSelection == "rock") && (computerSelection == "scissors")) {
-        playerScore++;
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
+
+    if ((playerSelection === "🗿") && (computerSelection === "✂️") || 
+        (playerSelection === "📄") && (computerSelection === "🗿") || 
+        (playerSelection === "✂️") && (computerSelection === "📄")) {
+            playerValue++;
+            winner = "player";
     }
-    if ((playerSelection === "paper") && (computerSelection === "scissors")) {
-        computerScore++;
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
-    }
-    if ((playerSelection === "paper") && (computerSelection === "rock")) {
-        playerScore++;
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
-    }
-    if ((playerSelection === "scissors") && (computerSelection === "rock")) {
-        computerScore++
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
-    }
-    if ((playerSelection === "scissors") && (computerSelection === "paper")) {
-        playerScore++;
-        return console.log("P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);;
-    }
+
     if (playerSelection === computerSelection) {
-        return console.log("tie round! P: " + playerSelection + " C: " + computerSelection + " // P: " + playerScore + " C: " + computerScore);
+            winner = "tie";
+    }
+}
+
+const updateScores = (playerValue, computerValue) => {
+    playerScorePara.innerText = `${playerValue}`;
+    computerScorePara.innerText = `${computerValue}`;
+}
+
+const updateRoundWinner = (winner) => {
+    if (winner === 'computer') {
+        roundWinnerPara.innerText = `Computer`;
+    }
+
+    if (winner === 'player') {
+        roundWinnerPara.innerText = `Player`;
+    }
+
+    if (winner === 'tie') {
+        roundWinnerPara.innerText = `Tie`;
+    }
+}
+
+const updateGameWinner = (playerValue, computerValue) => {
+    if (playerValue === 5) {
+        gameWinnerPara.innerText = `Game Winner: Player!`
+        choicesContainer.removeChild(rockButton);
+        choicesContainer.removeChild(paperButton);
+        choicesContainer.removeChild(scissorsButton);
+    }
+
+    if (computerValue === 5) {
+        gameWinnerPara.innerText = `Game Winner: Computer!`
+        choicesContainer.removeChild(rockButton);
+        choicesContainer.removeChild(paperButton);
+        choicesContainer.removeChild(scissorsButton);
     }
 }
 
 
 
-function game() {
-    // game iterated with for loop
-    let numGames = prompt("How many games to play?");
-    if (numGames > 0) {
-        for (let i = 0; i < numGames; i++) {
-            playRound(i);
-        }
-    }
-}
 
+rockButton.addEventListener('click', () => {
+    const playerSelection = '🗿';
+    playerFob.innerText = playerSelection;
+    const computerSelection = computerChoice();
+    computerFob.innerText = computerSelection;
 
+    playRoundVar(computerSelection, playerSelection);
+    updateScores(playerValue, computerValue);
+    updateRoundWinner(winner);
+    updateGameWinner(playerValue, computerValue);
+});
 
-function gameDictate() {
-    if (playerScore > computerScore) {
-        console.log("Congrats, idiot! you win !");
-    } else if (playerScore < computerScore) {
-        console.log("Sorry, idiot! you lose !");
-    } else {
-        console.log("Tie game!");
-    }
-}
+paperButton.addEventListener('click', () => {
+    const playerSelection = '📄';
+    playerFob.innerText = playerSelection;
+    const computerSelection = computerChoice();
+    computerFob.innerText = computerSelection;
 
+    playRoundVar(computerSelection, playerSelection);
+    updateScores(playerValue, computerValue);
+    updateRoundWinner(winner);
+    updateGameWinner(playerValue, computerValue);
+});
 
+scissorsButton.addEventListener('click', () => {
+    const playerSelection = '✂️';
+    playerFob.innerText = playerSelection;
+    const computerSelection = computerChoice();
+    computerFob.innerText = computerSelection;
+    
 
-function finale() {
-    game();
-    gameDictate();
-}
+    playRoundVar(computerSelection, playerSelection);
+    updateScores(playerValue, computerValue);
+    updateRoundWinner(winner);
+    updateGameWinner(playerValue, computerValue);
+});
+
 

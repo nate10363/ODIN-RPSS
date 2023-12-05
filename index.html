@@ -4,10 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper beats Scissors</title>
+    <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
-    <button onclick = "finale()" > Click Me </button>
-    <script src="script.js"></script>
+    <header>Rock Paper Scissors</header>
+    <main>
+        <div id="playerComputerInfo">
+            <div class="playerComputerInfo level2" id="playerInfo">
+                <h2 class="computerPlayerName">Player</h2>
+                <div>
+                    <div class="computerPlayerFob" id="playerFob"></div>
+                    
+                </div>
+            </div>
+            <div class="playerComputerInfo level2" id="computerInfo">
+                <h2 class="computerPlayerName">Computer</h2>
+                <div class="computerPlayerFob" id="computerFob"></div>
+            </div>
+        </div>
+        <div id="scoreContainer">
+            <p class="scoreDiv" id="playerScorePara"></p>
+            <p class="scoreDiv" id="computerScorePara"></p>
+        </div>
+        <h3 id="round-winner"><span class="span">Round Winner: </span><span class="span" id="round-winner-span"></span></h3>
+        <div id="choicesContainer">
+            <button class="choices" id="rock">🗿</button>
+            <button class="choices" id="paper">📄</button>
+            <button class="choices" id="scissors">✂️</button>
+        </div>
+        <h2 id="game-winner"></h2>
+        <!-- <button id="restart">Restart Game</button> -->
+
+
+    </main>
+
+
+    <script src="script2.js"></script>
 </body>
 
 </html>
